@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="es.kiwi.dao.IUserDAO">
+    <!--第二步：配置相关的Mapper 映射文件, 开启user支持二级缓存-->
+    <cache/>
+
+    <select id="findAll" resultType="user">
+        select *
+        from user
+    </select>
+
+    <!--第三步：配置 statement 上面的 useCache 属性-->
+    <select id="findById" parameterType="int" resultType="user" useCache="true">
+        select *
+        from user
+        where id = #{uid};
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update user
+        set username = #{username},
+            address  = #{address}
+        where id
+                  = #{id}
+    </update>
+
+</mapper>

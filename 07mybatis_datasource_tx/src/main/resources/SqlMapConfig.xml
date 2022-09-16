@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="jdbcConfig.properties"/>
+
+    <typeAliases>
+        <package name="es.kiwi.domain"/>
+    </typeAliases>
+
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <!--mybatis中的连接池：提供3种配置方式
+            配置的位置：
+                主配置文件SqlMapConfig.xml中的dataSource标签，type属性就是表示采用何种连接池方式
+            type属性的取值：
+                  POOLED    采用传统的javax.sql.DataSource规范中的连接池，mybatis中有针对规范的实现
+                  UNPOOLED  采用传统的获取连接的方式，虽然也实现javax.sql.DataSource接口，但是并没有使用池的思想
+                  JNDI      采用服务器提供的JNDI技术实现，来获取DataSource对象，不同的服务器所能拿到的DataSource是不一样的。
+                            注意：如果不是web或maven的war工程，时不能使用的。
+                            我们课程中使用的是tomcat服务器，采用连接池就是dbcp连接池
+            -->
+<!--            <dataSource type="UNPOOLED">-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <package name="es.kiwi.dao"/>
+    </mappers>
+</configuration>
